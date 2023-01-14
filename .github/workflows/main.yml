@@ -69,14 +69,12 @@ jobs:
     - name: executing remote ssh commands to deploy
       uses: appleboy/ssh-action@master
       with:
+        with:
         host: ${{ secrets.HOST }}
         username: ${{ secrets.USER }}
-        port: '5000'
         key: ${{ secrets.SSH_KEY }}
         passphrase: ${{ secrets.PASSPHRASE }} # Если ваш ssh-ключ защищён фразой-паролем
         script: |
-          # Выполняет pull образа с DockerHub
-          sudo docker pull <имя-пользователя>/<имя-репозитория>
-          #остановка всех контейнеров
+          sudo docker pull viktorbondarev/first_repository
           sudo docker stop $(sudo docker ps -a -q)
-          sudo docker run --rm -d -p 5000:5000 <имя-пользователя>/<имя-репозитория> 
+          sudo docker run --rm -d -p 5000:5000 viktorbondarev/first_repository
